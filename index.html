@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Number to Words</title>
+ <style>
+ body {
+ font-family: Arial, sans-serif;
+ }
+ input[type="text"] {
+ font-size: 16px;padding: 5px;
+ width: 200px;
+ }
+ #result {
+ margin-top: 10px;
+ font-size: 18px;
+ font-weight: bold;
+ }
+ .error {
+ color: red;
+ }
+ </style>
+</head>
+<body>
+ <h1>Number to Words Converter</h1>
+ <label for="numberInput">Enter a number (0 to 999):</label>
+ <input type="text" id="numberInput" oninput="convertNumberToWords()">
+ <div id="result"></div>
+ <script>
+ function convertNumberToWords() {
+ var numberInput = document.getElementById("numberInput").value;
+ var resultDiv = document.getElementById("result");
+ var number = parseInt(numberInput);
+ // Validate input
+ if (isNaN(number) || number < 0 || number > 999) {
+ resultDiv.textContent = "Invalid input. Please enter a number between 0 and 999.";
+ resultDiv.classList.add("error");
+ return;
+ }
+ // Define arrays for number words
+ var ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+ var teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", 
+"eighteen", "nineteen"];
+ var tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+ // Convert number to words
+ var words = "";
+ if (number >= 100) {
+ words += ones[Math.floor(number / 100)] + " hundred ";
+ number %= 100;
+ }
+ if (number >= 20) {
+ words += tens[Math.floor(number / 10)] + " ";
+ number %= 10;
+ }
+ if (number >= 10) {
+ words += teens[number - 10];
+ number = 0;
+ }
+ if (number > 0) {
+ words += ones[number];
+ }// Display result
+ resultDiv.textContent = words;
+ resultDiv.classList.remove("error");
+ }
+ </script>
+</body>
+</html>
